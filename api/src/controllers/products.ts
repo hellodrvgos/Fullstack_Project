@@ -8,7 +8,7 @@ export const createProductController = async (
     res: Response
 ) => {
     try {
-        const { name, category, price, description, image, sku } =  req.body;
+        const { name, category, price, description, image } =  req.body;
 
         const newProduct = new Product({
             name: name,
@@ -16,7 +16,6 @@ export const createProductController = async (
             price: price,
             description: description,
             image: image,
-            sku: sku
         });
         const product = await ProductServices.createProduct(newProduct);
         res.json(product);

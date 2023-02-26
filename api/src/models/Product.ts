@@ -4,9 +4,8 @@ export type ProductDocument = Document &{
     name: string;
     category: string;
     price: number;
-    descrption: string;
+    description: string;
     image: string
-    sku: string;
 }
 
 export const ProductSchema = new mongoose.Schema({

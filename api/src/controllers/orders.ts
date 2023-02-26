@@ -8,11 +8,10 @@ export const createOrderController = async (
     res: Response
 ) => {
     try {
-        const { name, category, price, description, image, sku } =  req.body;
-
         const newOrder = new Order({
             userId: req.params.id,
-            products: req.body.productList
+            products: req.body.products,
+            contactInfo: req.body.contactInfo
         });
         const order = await OrderServices.createOrder(newOrder);
         res.json(order);

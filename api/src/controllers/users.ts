@@ -7,10 +7,9 @@ import generateToken from "../utils/generateToken";
 
 export const createUserController = async (
     req: Request,
-    res: Response
 ) => {
     try {
-        const { email, password, fullname, country, city, address } =  req.body;
+        const { email, password, fullname } =  req.body;
 
         const saltRounds = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -19,12 +18,8 @@ export const createUserController = async (
             email: email,
             password: hashedPassword,
             fullname: fullname,
-            country: country,
-            city: city,
-            address: address
         });
         const user = await UserServices.createUser(newUser);
-        res.json(user);
     } catch (error) {
         console.log(error);
     }

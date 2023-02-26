@@ -5,6 +5,7 @@ import User from "./User";
 export type OrderDocument = Document &{
     userId: string;
     products: [];
+    contactInfo: object,
     orderCreated: Date;
 };
 
@@ -14,8 +15,14 @@ const OrderSchema = new mongoose.Schema({
         ref: User
     },
     products: [
-        {type: ProductSchema}
+        { type: ProductSchema },
+        // quantity: { type: Number, required: true }
     ],
+    contactInfo: {
+        country: { type: String },
+        city: { type: String },
+        address: { type: String }
+    },
     orderCreated: {
         type: Date,
         default: Date.now,

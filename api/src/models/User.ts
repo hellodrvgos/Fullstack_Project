@@ -18,15 +18,6 @@ const UserSchema = new mongoose.Schema({
     },
     fullname: {
         type: String,
-    },
-    country: {
-        type: String,
-    },
-    city: {
-        type: String,
-    },
-    address: {
-        type: String,
     }
 })
 
