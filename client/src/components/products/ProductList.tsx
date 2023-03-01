@@ -16,7 +16,7 @@ export default function ProductList() {
   }, [dispatch]);
 
   return <div>
-    <p><strong>This is ProductList</strong></p>
+    <p><strong>ProductList</strong></p>
     {
       productList.map((product, index) => {
         return <ProductItem key={index} product={product}/>

@@ -10,4 +10,10 @@ const getAllProducts = async (): Promise<ProductDocument[]> => {
     return Product.find();
 }
 
-export default { createProduct, getAllProducts };
+const updateQuantityById = async (
+    productId: string, update: Partial<ProductDocument>
+): Promise<ProductDocument | null> => {
+    return Product.findByIdAndUpdate(productId, update, {new: true});
+}
+
+export default { createProduct, getAllProducts, updateQuantityById };

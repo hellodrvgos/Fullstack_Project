@@ -12,10 +12,8 @@ export default function ProductItem({product}: {product: Product}) {
       };
 
     return <div>
-        This is ProductItem
+        <p>ProductItem</p>
         <p>Name: {product.name}</p>
-        <p>Price: {product.price}</p>
-        <p>Image: {product.image}</p>
         <button onClick={handleClick}>More Details</button>
         {
             isShown && <ProductDetails product={product}/>

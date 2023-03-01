@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import { Button, TextField } from '@mui/material'
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import UserInformation from "./UserInformation";
 
 export default function UserLogIn() {
 
@@ -40,7 +41,13 @@ export default function UserLogIn() {
     password: string
   }
 
+  const token = localStorage.getItem("token")
+  if (token) {
+    return <UserInformation/>
+  }
+
   return <div>
+    <p><strong>LOGIN</strong></p>
     <Formik
         initialValues={initialValues}
         validationSchema = {FormSchema}

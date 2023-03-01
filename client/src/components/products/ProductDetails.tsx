@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { cartActions } from "../../redux/slices/cart";
@@ -9,15 +10,41 @@ export default function ProductDetails({product}: {product: Product}) {
 
     const dispatch = useDispatch<AppDispatch>();
 
+    const [isShown, setIsShown] = useState(false);
+
+    const [userQuantity, setUserQuantity] = useState("");
+    
+    const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (Number(event.target.value) > product.quantity) {
+            alert(`We only have ${product.quantity} items. Please order less!`);
+            setIsShown(false);
+            return;
+        }
+        setUserQuantity(event.target.value);
+        setIsShown(true);
+    }
+
     return <div>
-        This is ProductDetails
-        <p>Name: {product.name}</p>
+        <p>ProductDetails</p>
+        {/* <p>Name: {product.name}</p> */}
         <p>Category: {product.category}</p>
         <p>Price: {product.price}</p>
         <p>Description: {product.description}</p>
         <p>Image: {product.image}</p>
-        <input type="text" placeholder="quantity"/>
-        <button onClick={() => {dispatch(cartActions.addToCart(product))}}>Add To Cart</button>
+        <p>Quantity: {product.quantity}</p>
+        <input type="text" placeholder="quantity" onChange={onChangeHandler}/>
+        {
+            isShown && <button onClick={() => {dispatch(cartActions.addToCart({
+                _id: product._id,
+                name: product.name,
+                category: product.category,
+                price: product.price,
+                description: product.description,
+                image: product.image,
+                quantity: product.quantity,
+                userQuantity: Number(userQuantity)
+            }))}}>Add To Cart</button>
+        }
         <button onClick={() => {dispatch(wishActions.addToWishList(product))}}>Add To Wishlist</button>
     </div>
 }

@@ -25,6 +25,13 @@ export const ProductSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    quantity: {
+        type: Number,
+        required: true
+    },
+    userQuantity: {
+        type: Number,
+    },
     image: {
         type: String,
         required: true

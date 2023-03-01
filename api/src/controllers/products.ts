@@ -8,13 +8,14 @@ export const createProductController = async (
     res: Response
 ) => {
     try {
-        const { name, category, price, description, image } =  req.body;
+        const { name, category, price, description, quantity, image } =  req.body;
 
         const newProduct = new Product({
             name: name,
             category: category,
             price: price,
             description: description,
+            quantity: quantity,
             image: image,
         });
         const product = await ProductServices.createProduct(newProduct);
@@ -35,3 +36,15 @@ export const getAllProductsController = async (
         console.log(error);
     }
 };
+
+export const updateProductQuantityController = async (
+    req: Request,
+    res: Response
+) => {
+    try {
+        const updatedQuantity = await ProductServices.updateQuantityById(req.params.id, req.body);
+        res.json(updatedQuantity);
+    } catch (error) {
+        console.log(error);
+    }
+}

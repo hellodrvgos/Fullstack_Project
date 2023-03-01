@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { RootState } from "../../redux/store";
 import { useSelector} from "react-redux";
 
-export default function OrderContactInfo() {
+export default function CheckoutContactInfo() {
 
     const FormSchema = Yup.object().shape(
         {
@@ -32,12 +32,9 @@ export default function OrderContactInfo() {
     const userId = localStorage.getItem("id") || "{}";
     const token = localStorage.getItem("token");
 
-    console.log(userId)
-
     const navigate = useNavigate();
 
     const cartList = useSelector((state: RootState) => state.cartlist.cartList);
-    console.log(cartList);
 
     function createOrderData(values: InitialValues) {
         const placeOrderUrl = `http://localhost:8000/orders/${userId}`;
@@ -52,12 +49,20 @@ export default function OrderContactInfo() {
         .then((response) => response.data)
         .then((data) => {
         console.log(data, "OrderContactInfo.tsx");
-        navigate("/");
+
+        cartList.map((product) => {
+            const updateQuantityUrl = `http://localhost:8000/products/${product._id}`;
+            axios.put(updateQuantityUrl, {
+                quantity: product.quantity - product.userQuantity
+            }, {headers: {Authorization: `Bearer ${token}`}});
+            return;
+        })
+        navigate("/orders");
         });
     }
 
     return <div>
-        <p><strong>This is OrderContactInfo</strong></p>
+        <p>CheckoutContactInfo</p>
         <Formik
         initialValues={initialValues}
         validationSchema = {FormSchema}
