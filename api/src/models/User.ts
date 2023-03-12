@@ -3,7 +3,8 @@ import mongoose, { Document } from "mongoose";
 export type UserDocument = Document &{
     email: string;
     password: string;
-    fullname: string;
+    firstName: string;
+    lastName: string;
 }
 
 const UserSchema = new mongoose.Schema({
@@ -16,7 +17,22 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    fullname: {
+    firstName: {
+        type: String,
+    },
+    lastName: {
+        type: String,
+    },
+    phone: {
+        type: String,
+    },
+    country: {
+        type: String,
+    },
+    city: {
+        type: String,
+    },
+    address: {
         type: String,
     }
 })

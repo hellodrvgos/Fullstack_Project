@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
 import { RootState, AppDispatch } from "../../redux/store";
 import { getOrderListInfo } from "../../redux/thunks/orders";
 import OrderListItem from "./OrderListItem";
-import NavBarAccount from "../../components/navBar/NavBarAccount";
 
 export default function OrderList() {
 
@@ -17,15 +17,19 @@ export default function OrderList() {
 
     const orderList = useSelector((state: RootState) => state.orderlist.orderList);
 
+    if (orderList[0]) {
+        return (
+            <div>
+                {
+                    orderList[0].cart.map((product, index) => {
+                        return <OrderListItem key={index} product={product}/>
+                    })
+                }
+            </div>
+        )
+    }
+
     return (
-        <div>
-            <NavBarAccount/>
-            <p><strong>OrderList</strong></p>
-            {
-                orderList.map((order, index) => {
-                    return <OrderListItem key={index} order={order}/>
-                })
-            }
-        </div>
+        <div>Loading</div>
     )
 }

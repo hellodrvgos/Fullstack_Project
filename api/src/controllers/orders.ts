@@ -10,8 +10,8 @@ export const createOrderController = async (
     try {
         const newOrder = new Order({
             userId: req.params.id,
-            products: req.body.products,
-            contactInfo: req.body.contactInfo
+            cart: req.body.cart,
+
         });
         const order = await OrderServices.createOrder(newOrder);
         res.json(order);

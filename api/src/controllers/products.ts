@@ -8,15 +8,18 @@ export const createProductController = async (
     res: Response
 ) => {
     try {
-        const { name, category, price, description, quantity, image } =  req.body;
+        const { pet, name, category, brand, price, description, image, rating, quantity  } =  req.body;
 
         const newProduct = new Product({
+            pet: pet,
             name: name,
             category: category,
+            brand: brand,
             price: price,
             description: description,
-            quantity: quantity,
             image: image,
+            rating: rating,
+            quantity: quantity
         });
         const product = await ProductServices.createProduct(newProduct);
         res.json(product);

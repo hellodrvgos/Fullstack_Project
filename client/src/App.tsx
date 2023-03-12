@@ -1,33 +1,34 @@
 import {Routes, Route} from "react-router-dom";
 
+import CssBaseline from '@mui/material/CssBaseline';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+
 import "./App.css";
-import CartList from "./components/cart/CartList";
-import NavBar from "./components/navBar/NavBar";
-import Checkout from "./components/checkout/Checkout";
-import ProductList from "./components/products/ProductList";
-import UserInformation from "./components/users/UserInformation";
-import UserLogIn from "./components/users/UserLogIn";
-import UserRegister from "./components/users/UserRegister";
-import WishList from "./components/wishlist/WishList";
 import HomePage from "./pages/HomePage";
+import Products from "./pages/Products";
 import OrderList from "./components/orders/OrderList";
-import Account from "./pages/Accounts";
+import TopMenu from "./components/navigation/TopMenu";
+import Footer from "./components/footer/Footer";
+import UserInformation from "./components/users/UserInformation";
 
 function App() {
 
   return <div className="App">
-          App here
-          <NavBar/>
-          <Routes>
-            <Route path="" element={<HomePage/>}></Route>
-            <Route path="/products" element={<ProductList/>}></Route>
-            <Route path="/account/wishlist" element={<WishList/>}></Route>
-            <Route path="/register" element={<UserRegister/>}></Route>
-            <Route path="/login" element={<UserLogIn/>}></Route>
-            <Route path="/account" element={<Account/>}></Route>
-            <Route path="/account/checkout" element={<Checkout/>}></Route>
-            <Route path="/account/orders" element={<OrderList/>}></Route>
-          </Routes>
+      <CssBaseline />
+      {/* <Container maxWidth="xl"> */}
+        <Box component={Paper} elevation={6} square>
+        <TopMenu/>
+        <Routes>
+          <Route path="" element={<HomePage/>}></Route>
+          <Route path="/products" element={<Products/>}></Route>
+          <Route path="/orders" element={<OrderList/>}></Route>
+          <Route path="/profile" element={<UserInformation/>}>
+          </Route>
+        </Routes>
+        <Footer/>
+        </Box>
+      {/* </Container> */}
     </div>;
 }
 

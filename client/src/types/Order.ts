@@ -1,12 +1,13 @@
-import { Product } from "./Product";
-
 export type Order = {
     _id: string;
-    contactInfo: {
-        country: string,
-        city: string,
-        address: string
-    };
-    products: Product[];
+    cart: [];
     orderCreated: string;
+}
+
+export type ProductOrdered = {
+    productId: {
+        name: string,
+    },
+    userQuantity: number,
+    _id: string
 }

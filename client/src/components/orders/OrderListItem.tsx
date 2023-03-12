@@ -1,18 +1,21 @@
-import { Order } from "../../types/Order";
-import OrderProduct from "./OrderProduct";
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import { Typography } from "@mui/material";
 
-export default function OrderListItem({order}: {order: Order}) {
-    console.log(order, "OrderListItem.tsx")
-    const orderProducts = order.products
+import { ProductOrdered } from "../../types/Order";
+
+export default function OrderListItem({product}: {product: ProductOrdered}) {
+
+    console.log(product, "productOrderListItem")
+
     return (
         <div>
-            <p>This is OrderListItem</p>
-            <p>OrderDate: {order.orderCreated}</p>
-            {
-                orderProducts.map((orderProduct, index) => {
-                    return <OrderProduct key={index} orderproduct={orderProduct}/>
-                })
-            }
+        <Box sx={{width: "50%", mx: "auto", mt: 10}}>
+            <Paper elevation={1}>
+            <Typography variant="h6">Name: {product.productId.name}</Typography>
+            <Typography variant="h6">Quantity ordered: {product.userQuantity}</Typography>
+            </Paper>
+        </Box>
         </div>
     )
 }

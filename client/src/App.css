@@ -1,5 +1,11 @@
+#video {
+  height: 600px;
+  margin-bottom: 0;
+}
+
 .App {
   text-align: center;
+  background-color: rgb(52, 49, 49);
 }
 
 .App-logo {

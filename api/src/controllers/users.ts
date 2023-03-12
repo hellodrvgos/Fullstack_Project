@@ -7,9 +7,10 @@ import generateToken from "../utils/generateToken";
 
 export const createUserController = async (
     req: Request,
+    res: Response
 ) => {
     try {
-        const { email, password, fullname } =  req.body;
+        const { email, password, firstName, lastName } =  req.body;
 
         const saltRounds = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -17,9 +18,16 @@ export const createUserController = async (
         const newUser = new User({
             email: email,
             password: hashedPassword,
-            fullname: fullname,
+            firstName: firstName,
+            lastName: lastName
         });
-        const user = await UserServices.createUser(newUser);
+
+        const userEmail = await UserServices.findUserByEmail(email);
+        if (!userEmail) {
+            const user = await UserServices.createUser(newUser);
+            res.json({status: "success", message: `Registration successful.`})
+        }
+        res.json({message: `${req.body.email} is already registered.`})
     } catch (error) {
         console.log(error);
     }
@@ -42,7 +50,7 @@ export const loginWithPasswordController = async (
         const match = await bcrypt.compare(plainPassword, passwordDB);
 
         if (!match) {
-            res.json({message: "wrong password"});
+            res.json({message: "Wrong password."});
             return;
         }
 

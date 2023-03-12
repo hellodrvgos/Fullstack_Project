@@ -1,17 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Address } from "cluster";
 
 type InitialState = {
     userInfo: {
         email: string,
-        fullname: string,
+        firstName: string,
+        lastName: string,
+        phone: string,
+        country: string,
+        city: string,
+        address: string
     };
 }
 
 const initialState: InitialState = {
     userInfo: {
         email: "",
-        fullname: "",
+        firstName: "",
+        lastName: "",
+        phone: "",
+        country: "",
+        city: "",
+        address: ""
     },
 }
 

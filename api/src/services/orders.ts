@@ -7,9 +7,9 @@ const createOrder = async (
 }
 
 const getAllOrdersByUserId = async (
-    userIdRequest: string
+    userIdRequest: string,
     ): Promise<OrderDocument[]> => {
-    return Order.find({userId: userIdRequest})
+    return Order.find({userId: userIdRequest}).populate("cart.productId");
 }
 
 export default { createOrder, getAllOrdersByUserId };
