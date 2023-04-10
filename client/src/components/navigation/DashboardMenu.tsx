@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -7,18 +6,36 @@ import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import SupportAgentIcon from '@mui/icons-material/SupportAgent';
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import PersonIcon from '@mui/icons-material/Person';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PaymentIcon from '@mui/icons-material/Payment';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import { Button } from '@mui/material';
 
-export default function DashboardMenu() {
+type StateAccountDrawer = {
+  setStateAccountDrawer: Function;
+  setCheckoutInfo: Function
+}
+
+export default function DashboardMenu({setStateAccountDrawer, setCheckoutInfo}: StateAccountDrawer) {
+
+  const navigate = useNavigate();
+
+  function closeMenu() {
+    setStateAccountDrawer(false)
+    setCheckoutInfo(false);
+  }
+
+  function logOut() {
+    localStorage.removeItem("token");
+    closeMenu()
+    setTimeout(() => {navigate("/")}, 1000)
+  }
+
   return (
-    <Box sx={{ width: '100%', mt: 1 }}>
+    <Box sx={{ width: '100%', mt: 1, overflow: "hidden" }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Avatar sx={{ my: 4 }}>
           <PersonIcon />
@@ -28,18 +45,25 @@ export default function DashboardMenu() {
         <ListSubheader component="div"  >
           DASHBOARD
         </ListSubheader>
-        <ListItemButton component={Link} to="/orders">
+        <ListItemButton component={Link} to="/orders" onClick={closeMenu}>
           <ListItemIcon>
             <ShoppingBagIcon />
           </ListItemIcon>
           <ListItemText primary="Orders" />
         </ListItemButton>
 
+        <ListItemButton component={Link} to="/favorites" onClick={closeMenu}>
+          <ListItemIcon>
+            <FavoriteIcon />
+          </ListItemIcon>
+          <ListItemText primary="Favorites" />
+        </ListItemButton>
+
         <ListItemButton>
           <ListItemIcon>
-            <SupportAgentIcon />
+            <QuestionAnswerIcon />
           </ListItemIcon>
-          <ListItemText primary="Support Tickets" />
+          <ListItemText primary="Support Chat - soon" />
         </ListItemButton>
 
       <Divider sx={{my: 3}}/>
@@ -47,19 +71,13 @@ export default function DashboardMenu() {
         <ListSubheader component="div" >
             ACCOUNT SETTINGS
           </ListSubheader>
-          <ListItemButton component={Link} to="/profile">
+          <ListItemButton component={Link} to="/profile" onClick={closeMenu}>
             <ListItemIcon>
               <PersonIcon />
             </ListItemIcon>
             <ListItemText primary="Profile Info" />
           </ListItemButton>
-          <ListItemButton>
-            <ListItemIcon>
-              <LocationOnIcon />
-            </ListItemIcon>
-            <ListItemText primary="Addresses" />
-          </ListItemButton>
-          <ListItemButton>
+          <ListItemButton component={Link} to="/payments" onClick={closeMenu}>
             <ListItemIcon>
               <PaymentIcon />
             </ListItemIcon>
@@ -69,9 +87,9 @@ export default function DashboardMenu() {
       <Divider sx={{my: 3}}/>
 
         <Button
-          type="submit"
+          onClick={logOut}
           variant="outlined"
-          sx={{ my: 1 }}
+          sx={{ my: 1, color: "black", borderColor: "black" }}
         >
           Log Out
         </Button>

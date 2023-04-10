@@ -3,7 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import productListReducer from "../redux/slices/product";
 import userInformationReducer from "../redux/slices/user";
 import cartListReducer from "../redux/slices/cart";
-import wishListReducer from "../redux/slices/wishlist";
+import favoritesReducer from "./slices/favorites";
 import orderListReducer from "../redux/slices/orders";
 
 const store = configureStore({
@@ -11,7 +11,7 @@ const store = configureStore({
         productlist: productListReducer,
         userinformation: userInformationReducer,
         cartlist: cartListReducer,
-        wishlist: wishListReducer,
+        favorites: favoritesReducer,
         orderlist: orderListReducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({

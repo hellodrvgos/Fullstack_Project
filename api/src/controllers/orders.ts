@@ -14,7 +14,7 @@ export const createOrderController = async (
 
         });
         const order = await OrderServices.createOrder(newOrder);
-        res.json(order);
+        res.json({order, message: `Order placed`});
     } catch (error) {
         console.log(error);
     }

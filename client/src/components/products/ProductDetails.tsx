@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { useState } from "react";
+import { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
+import axios from 'axios';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -12,6 +13,8 @@ import Rating from '@mui/material/Rating';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
+import Tooltip from '@mui/material/Tooltip';
+import { Alert, AlertColor } from '@mui/material';
 
 import { RootState } from "../../redux/store";
 import { cartActions } from "../../redux/slices/cart";
@@ -31,17 +34,62 @@ export default function ProductDetails({product}: {product: Product}) {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const [userQuantity, setUserQuantity] = useState("1");
+  let userQuantity = 1;
   
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
       if (Number(event.target.value) > product.quantity) {
           alert(`We only have ${product.quantity} items. Please order less!`);
           return;
       }
-      setUserQuantity(event.target.value);
+      userQuantity = Number(event.target.value);
   }
 
   const cartList = useSelector((state: RootState) => state.cartlist.cartList);
+
+  const isInCart = cartList.some((item) => item._id === product._id);
+
+  const token = localStorage.getItem("token");
+
+  const userId = localStorage.getItem("id") || "{}";
+
+  function checkCart() {
+    !isInCart ?
+    dispatch(cartActions.addToCart({
+              _id: product._id,
+              name: product.name,
+              category: product.category,
+              price: product.price,
+              description: product.description,
+              // image: product.image,
+              quantity: product.quantity,
+              userQuantity: userQuantity
+          })) :
+          dispatch(cartActions.increaseQuantity({
+            _id: product._id,
+            userQuantity: userQuantity
+          }))
+  }
+  const [isShown, setIsShown] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertSeverity, setAlertSeverity] = useState<AlertColor>("info");
+
+  const showAlert = (message: string) => {
+    setIsShown(true);
+    setAlertMessage(message);
+  };
+
+  function addToFavorites() {
+    const addToFavoritesUrl = `http://localhost:8000/favorites/${userId}`;
+    axios.post(addToFavoritesUrl, {
+      favorites: product._id,
+    }, {headers: {Authorization: `Bearer ${token}`}})
+    .then((response) => response.data)
+    .then((data) => {    
+      setAlertSeverity("success")
+      showAlert(data.message);
+      setTimeout(() => {setIsShown(false);}, 2000)
+    })
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -85,18 +133,22 @@ export default function ProductDetails({product}: {product: Product}) {
                 <Button 
                 type="submit"
                 variant="contained"
-                onClick={() => {dispatch(cartActions.addToCart({
-                        _id: product._id,
-                        name: product.name,
-                        category: product.category,
-                        price: product.price,
-                        description: product.description,
-                        // image: product.image,
-                        quantity: product.quantity,
-                        userQuantity: Number(userQuantity)
-                    }))}}
-                >Add to cart</Button><Button variant="outlined">Add to Wishlist</Button>
+                onClick={checkCart}
+                sx={{bgcolor: "black"}}
+                >Add to cart</Button>
+                {
+                  token ?              
+                  <Button onClick={addToFavorites} variant="outlined" sx={{color: "black", borderColor: 'black'}} >Add to Favorites</Button> :
+                  <Tooltip title="Please SIGN IN">
+                    <Box>                
+                      <Button disabled variant="outlined">Add to Favorites</Button>
+                    </Box>
+                  </Tooltip>
+                }
               </Stack>
+              {isShown && <Alert severity={alertSeverity} sx={{mt: 1}}>
+              {alertMessage}
+              </Alert>}
           </Item>
         </Grid>
         <Grid item xs={12}>

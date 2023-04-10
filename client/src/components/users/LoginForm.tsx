@@ -1,23 +1,20 @@
 import {Formik, Form} from "formik";
 import axios from "axios";
 import * as Yup from "yup";
+import { useState } from "react";
 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+import Alert, { AlertColor } from '@mui/material/Alert';
 
+type AccountState = {
+  setStateAccountDrawer: Function;
+  setLoginState: Function;
+}
 
-import * as React from 'react';
-import Alert from '@mui/material/Alert';
-
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-export default function LoginForm() {
+export default function LoginForm({setStateAccountDrawer, setLoginState}: AccountState) {
 
   const FormSchema = Yup.object().shape(
     {
@@ -33,15 +30,13 @@ export default function LoginForm() {
 
   const loginUrl = "http://localhost:8000/users/login";
 
-  const navigate = useNavigate();
-
   const [isShown, setIsShown] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  const [alertSeverity, setAlertSeverity] = useState<AlertColor>("info");
 
   const showAlert = (message: string) => {
     setIsShown(true);
     setAlertMessage(message);
-    setTimeout(() => {setIsShown(false);}, 2000)
   };
 
   function login(values: InitialValues) {
@@ -51,13 +46,18 @@ export default function LoginForm() {
     })
     .then((response) => response.data)  
     .then((data) => {
-      if (!data.message) {
-        localStorage.setItem("token", data.token)
-        localStorage.setItem("id", data.id)
-        navigate("/products");
+      if (data.status !== "success") {
+        setAlertSeverity("warning")
+        showAlert(data.message);
+        setTimeout(() => {setIsShown(false);}, 2000)
         return;
       }
+      localStorage.setItem("token", data.token)
+      localStorage.setItem("id", data.id)
+      setLoginState(true);
+      setAlertSeverity("success")
       showAlert(data.message);
+      setStateAccountDrawer(false);
     });
   }
 
@@ -87,6 +87,7 @@ export default function LoginForm() {
             return  <Form>
             <TextField
                 margin="normal"
+                variant="standard"
                 required
                 fullWidth
                 id="email"
@@ -101,6 +102,7 @@ export default function LoginForm() {
             ): null}
             <TextField
                 margin="normal"
+                variant="standard"
                 required
                 fullWidth
                 name="password"
@@ -109,42 +111,29 @@ export default function LoginForm() {
                 id="password"
                 autoComplete="current-password"
                 onChange = {handleChange}
+                sx={{mb: 2}}
             />
             {errors.password && touched.password ? (
               <div className='error-message'> {errors.password}</div>  
             ): null}
-            <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-            />
+              <Link href="#" variant="body2">
+                Forgot password?
+              </Link>
             <Button
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 3, mb: 2, bgcolor: "black" }}
             >
                 Sign In
             </Button>
-            <Grid container>
-              <Grid item xs>
-              <Link href="#" variant="body2">
-                  Forgot password?
-              </Link>
-              </Grid>
-              <Grid item>
-              <Link href="#" variant="body2">
-                  Don't have an account? Sign Up
-              </Link>
-              </Grid>
-            </Grid>
             </Form>
             }}
           </Formik>
-          {isShown && <Alert severity="warning">
+          {isShown && <Alert severity={alertSeverity}>
           {alertMessage}
           </Alert>}
-        </Box>
-        
+        </Box> 
       </Box>
     </div>);
 }

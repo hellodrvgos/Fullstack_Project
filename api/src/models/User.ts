@@ -5,6 +5,10 @@ export type UserDocument = Document &{
     password: string;
     firstName: string;
     lastName: string;
+    phone: string;
+    country: string;
+    city: string;
+    address: string;
 }
 
 const UserSchema = new mongoose.Schema({
@@ -19,21 +23,27 @@ const UserSchema = new mongoose.Schema({
     },
     firstName: {
         type: String,
+        default: "",
     },
     lastName: {
         type: String,
+        default: "",
     },
     phone: {
         type: String,
+        default: "",
     },
     country: {
         type: String,
+        default: "",
     },
     city: {
         type: String,
+        default: "",
     },
     address: {
         type: String,
+        default: "",
     }
 })
 

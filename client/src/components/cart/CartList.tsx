@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import { Typography } from "@mui/material";
 import Avatar from '@mui/material/Avatar';
@@ -10,15 +11,8 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 
 import { RootState } from "../../redux/store";
 import { useSelector} from "react-redux";
-
 import CartItem from "./CartItem";
 import emptybowl from "../../assets/emptybowl.png"
-
-const style = {
-    width: '100%',
-    maxWidth: 360,
-    bgcolor: 'background.paper',
-  };
 
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -31,26 +25,44 @@ const style = {
 
   type CheckOut = {
     checkoutSide: Function
+    toggleCartDrawer: Function
   }
 
-export default function CartList({checkoutSide}: CheckOut ) {
+export default function CartList({checkoutSide, toggleCartDrawer}: CheckOut ) {
+
+const [buttonDisabled, setButtonDisabled] = useState(false);
+
+const [stepcolor, setStepColor] = useState("#bdbdbd");
+
+function checkoutHandler() {
+    checkoutSide("800px");
+    setButtonDisabled(true);
+    setStepColor("#01e019");
+}
 
 const cartList = useSelector((state: RootState) => state.cartlist.cartList);
 
 return (
-<Box sx={{ minWidth: "400px" }}>   
+<Box sx={{ 
+          width: "400px",
+          boxSizing: "content-box",
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: "95vh",
+    justifyContent: "space-between",
+}}>   
 
     <Grid container spacing={2}>
         <Grid item xs={12} >
             <Item>
                 <Box sx={{ width: '100%'}}>
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <Avatar sx={{ my: 3}}>
+                        <Avatar sx={{ my: 3, bgcolor: stepcolor}}>
                             <ShoppingCartIcon />
                         </Avatar>
                     </Box>
                 </Box>
-                <Box sx={{ mx: 2, display: "flex", flexDirection: "column", rowGap: 2, minHeight: "350px"}}>
+                <Box sx={{ mx: 1, display: "flex", flexDirection: "column", rowGap: 2, maxHeight: "57vh", overflow: "hidden", overflowY: "scroll"}}>
                 {
                     cartList.map((product, index) => {
                         return <CartItem key={index} product={product}/>
@@ -61,8 +73,9 @@ return (
         </Grid>
     </Grid>
 
-        {
-        cartList.length > 0 ? (<Grid container spacing={2}>
+    {
+        cartList.length > 0 ? 
+        (<Grid container spacing={2}>
             <Grid item xs={12}>
                 <Box sx={{ display: "flex", flexDirection: "column", rowGap: 2}}>
                     <Item sx={{ px: 3, textAlign: "left", bgcolor: "#eee", borderRadius: 0 }}>
@@ -85,34 +98,37 @@ return (
                     </Item>
                 </Box>
             </Grid>
-
             <Grid item xs={12}>
-                <Box sx={{ mx: 2, display: "flex", flexDirection: "row"}}>
-                    <Item>
-                        <Button variant="outlined" fullWidth startIcon={<ShoppingCartIcon />} onClick={() => {checkoutSide("800px")}}>
-                            Continue Shopping
+                <Box sx={{width: "100%", px: 2}}>
+                    {
+                        !buttonDisabled ? 
+                        <Button variant="contained" fullWidth endIcon={<ShoppingCartCheckoutIcon />} onClick={() => {checkoutHandler()}}>
+                        Checkout
+                        </Button> :
+                        <Button variant="contained" fullWidth endIcon={<ShoppingCartCheckoutIcon />} disabled>
+                        Checkout
                         </Button>
-                    </Item>
-                    <Item>
-                        <Button variant="contained" fullWidth endIcon={<ShoppingCartCheckoutIcon />} onClick={() => {checkoutSide("800px")}}>
-                            Checkout
-                        </Button>
-                    </Item>
+                    }
                 </Box>
             </Grid>
         </Grid>) : 
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: -30, rowGap: 5 }}>
-                <img
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: -30, rowGap: 10 }}>
+            <img
             src={emptybowl}
             alt="Empty Cart"
             loading="lazy"
             width="50%"
-          />
-        <Typography variant="h5">Please add some food!</Typography>
-        <Typography>X</Typography>
+            />
+            <Typography variant="h6">Please add some food!</Typography>
+            <Button
+              onClick={toggleCartDrawer(false)}
+              variant="contained"
+              sx={{ mt: 3, mb: 2, bgcolor: "black" }}
+              >
+              Continue Shopping
+              </Button>
         </Box>
-
-        }
+    }
 </Box> 
 )
 }

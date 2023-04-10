@@ -7,6 +7,7 @@ export type Order = {
 export type ProductOrdered = {
     productId: {
         name: string,
+        price: number
     },
     userQuantity: number,
     _id: string

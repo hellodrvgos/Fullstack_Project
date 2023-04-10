@@ -1,20 +1,19 @@
+import { useState } from "react";
 import {Formik, Form} from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-
 import Alert, { AlertColor } from '@mui/material/Alert';
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-export default function RegisterForm() {
+type TabValue = {
+  setValue: Function;
+}
+
+export default function RegisterForm({setValue}: TabValue) {
 
   const FormSchema = Yup.object().shape(
     {
@@ -45,8 +44,6 @@ export default function RegisterForm() {
 
   const registerUrl = "http://localhost:8000/users/register";
 
-    const navigate = useNavigate();
-
   const [isShown, setIsShown] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertSeverity, setAlertSeverity] = useState<AlertColor>("info");
@@ -73,7 +70,7 @@ export default function RegisterForm() {
       }
       setAlertSeverity("success")
       showAlert(data.message);
-      setTimeout(() => {navigate("/products");}, 1000)
+      setTimeout(() => {setValue(0)}, 1000)
     })
   }
 
@@ -95,9 +92,10 @@ export default function RegisterForm() {
         >
           {({errors, touched, handleChange}) => {
           return  <Form>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} sx={{mb: 3}}>
               <Grid item xs={12} sm={6}>
                   <TextField
+                  variant="standard"
                   autoComplete="given-name"
                   name="firstName"
                   required
@@ -113,6 +111,7 @@ export default function RegisterForm() {
               </Grid>
               <Grid item xs={12} sm={6}>
                   <TextField
+                  variant="standard"
                   required
                   fullWidth
                   id="lastName"
@@ -127,6 +126,7 @@ export default function RegisterForm() {
               </Grid>
               <Grid item xs={12}>
                   <TextField
+                  variant="standard"
                   required
                   fullWidth
                   id="email"
@@ -141,6 +141,7 @@ export default function RegisterForm() {
               </Grid>
               <Grid item xs={12}>
                   <TextField
+                  variant="standard"
                   required
                   fullWidth
                   name="password"
@@ -154,28 +155,15 @@ export default function RegisterForm() {
                     <div className='error-message'> {errors.password}</div>  
                   ): null}
               </Grid>
-              <Grid item xs={12}>
-                  <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="Subscribe to Newsletter"
-                  />
-              </Grid>
             </Grid>
             <Button
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 3, mb: 2, bgcolor: "black" }}
             >
             Sign Up
             </Button>
-            <Grid container justifyContent="flex-end">
-            <Grid item>
-                <Link href="#" variant="body2">
-                Already have an account? Sign in
-                </Link>
-            </Grid>
-            </Grid>
           </Form>
           }}
         </Formik>

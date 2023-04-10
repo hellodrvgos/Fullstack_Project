@@ -43,7 +43,12 @@ function a11yProps(index: number) {
   };
 }
 
-export default function LoginRegisterTabs() {
+type AccountState = {
+  setStateAccountDrawer: Function;
+  setLoginState: Function;
+}
+
+export default function LoginRegisterTabs({setStateAccountDrawer, setLoginState}: AccountState) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -51,7 +56,7 @@ export default function LoginRegisterTabs() {
   };
 
   return (
-    <Box sx={{ width: '100%'}}>
+    <Box sx={{ maxWidth: "400px" }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Avatar sx={{ my: 4 }}>
           <PersonIcon />
@@ -63,10 +68,10 @@ export default function LoginRegisterTabs() {
       </Box>
 
       <TabPanel value={value} index={0}>
-        <LoginForm/>
+        <LoginForm setStateAccountDrawer={setStateAccountDrawer} setLoginState={setLoginState}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <RegisterForm/>
+        <RegisterForm setValue={setValue}/>
       </TabPanel>
     </Box>
   );

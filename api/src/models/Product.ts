@@ -10,7 +10,6 @@ export type ProductDocument = Document &{
     image: string;
     rating: number;
     quantity: number;
-    userQuantity: number;
 }
 
 export const ProductSchema = new mongoose.Schema({

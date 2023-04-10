@@ -39,29 +39,28 @@ export default function ProductItem({product}: {product: Product}) {
   const handleClose = () => setOpen(false);
 
   return (
-      // <Stack direction="row" spacing={8}>
-      <Card sx={{ width: "30%"}}>
-        <CardActionArea sx={{padding: "15px 5px 15px 5px", height: "100%" }} onClick={handleOpen}>
+      <Card sx={{ width: "24%", mr: 1}}>
+        <CardActionArea sx={{padding: "5px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-around", height: "100%" }} onClick={handleOpen}>
           <CardMedia
             component="img"
-            height="300px"
             image={product.image}
             alt={product.name}
-            sx={{width: "60%", margin: "0 auto"}}
+            sx={{width:"70%", height: "50%", margin: "0 auto"}}
           />
-          <CardContent>
-            {
-            // isShown && <ProductDetails product={product}/>
-            isShown && <Typography>Hello</Typography>
-            }
-            <Rating name="half-rating-read" value={product.rating} precision={0.5} readOnly />
-            <Typography variant="body1" color="text.secondary">
-            {product.brand} {product.category}
-            </Typography>
-            <Typography gutterBottom variant="h5" component="div">
-            {product.name}
-            </Typography>
-          </CardContent>
+          <Box sx={{height: "40%"}}>
+            <CardContent>
+              {
+              isShown && <Typography>Hello</Typography>
+              }
+              <Rating name="half-rating-read" value={product.rating} precision={0.5} readOnly />
+              <Typography variant="body1" color="text.secondary">
+              {product.brand} {product.category}
+              </Typography>
+              <Typography gutterBottom variant="h6" sx={{fontWeight: "normal"}}>
+              {product.name}
+              </Typography>
+            </CardContent>
+          </Box>
         </CardActionArea>
         <Modal
           open={open}
@@ -74,7 +73,6 @@ export default function ProductItem({product}: {product: Product}) {
           </Box>
         </Modal>
       </Card>  
-      // </Stack>
     );
     
 }

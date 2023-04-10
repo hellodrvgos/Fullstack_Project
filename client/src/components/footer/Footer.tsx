@@ -7,7 +7,7 @@ import Stack from '@mui/material/Stack';
 export default function Footer() {
     return (
         <Box sx={{ flexGrow: 1, height: "250px", backgroundColor: "black", color: "white", mt: "100px" }}>
-        <Grid container spacing={2} sx={{textAlign: "left", pt: "30px"}}>
+        <Grid container spacing={2} sx={{textAlign: "left", pt: "30px", pb: 3, bgcolor: "black"}}>
           <Grid item xs={3}>
             <Box sx={{textAlign: "center"}}>
                 <PetsIcon sx={{fontSize: "170px", opacity: "0.8"}}/>
@@ -41,6 +41,8 @@ export default function Footer() {
               <Typography variant='body1'>Images & Videos by:</Typography>
               <Typography variant='body1'>PURINA.COM</Typography>
               <Typography variant='body1'>ENVATO.COM</Typography>
+              <Typography variant='body1'>ICONS-ICONS.COM</Typography>
+              <Typography variant='body1'>WIKIMEDIA.ORG</Typography>
               </Stack>
             </Box>
           </Grid>

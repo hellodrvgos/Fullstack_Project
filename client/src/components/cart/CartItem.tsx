@@ -1,7 +1,8 @@
-import { Product } from "../../types/Product";
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import { Typography } from "@mui/material";
+
+import { Product } from "../../types/Product";
 
 export default function CartItem({product}: {product: Product}) {
 
@@ -16,7 +17,7 @@ export default function CartItem({product}: {product: Product}) {
         {product.name}
         </Typography>
         <Typography variant="body2">
-        x {product.userQuantity}
+        ${product.price} x {product.userQuantity}
         </Typography>
         <Divider sx={{mt: 1}}/>
     </Box>

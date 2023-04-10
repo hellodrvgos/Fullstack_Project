@@ -10,7 +10,7 @@ export const createUserController = async (
     res: Response
 ) => {
     try {
-        const { email, password, firstName, lastName } =  req.body;
+        const { email, password, firstName, lastName, phone, country, city, address } =  req.body;
 
         const saltRounds = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -19,15 +19,19 @@ export const createUserController = async (
             email: email,
             password: hashedPassword,
             firstName: firstName,
-            lastName: lastName
+            lastName: lastName,
+            phone: phone,
+            country: country,
+            city: city,
+            address: address
         });
 
         const userEmail = await UserServices.findUserByEmail(email);
         if (!userEmail) {
             const user = await UserServices.createUser(newUser);
-            res.json({status: "success", message: `Registration successful.`})
+            res.json({status: "success", message: `Registration successful`})
         }
-        res.json({message: `${req.body.email} is already registered.`})
+        res.json({message: `${req.body.email} is already registered`})
     } catch (error) {
         console.log(error);
     }
@@ -50,11 +54,11 @@ export const loginWithPasswordController = async (
         const match = await bcrypt.compare(plainPassword, passwordDB);
 
         if (!match) {
-            res.json({message: "Wrong password."});
+            res.json({message: "Wrong password"});
             return;
         }
 
-        res.json({id: userData?._id, token: generateToken(userData._id)});
+        res.json({id: userData?._id, token: generateToken(userData._id), status: "success", message: `Login successful`});
     } catch (error) {
         console.log(error);
     }

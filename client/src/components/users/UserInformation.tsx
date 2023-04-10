@@ -1,21 +1,18 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {Formik, Form, validateYupSchema} from "formik";
-import * as Yup from "yup";
 import axios from "axios";
 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Avatar from '@mui/material/Avatar';
-import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import { RootState, AppDispatch } from "../../redux/store"
 import { getUserInformation } from "../../redux/thunks/user";
+import { Typography } from "@mui/material";
 
 export default function UserInformation() {
 
@@ -27,7 +24,7 @@ useEffect(() => {
     dispatch(getUserInformation(userId));
 }, [dispatch, userId]);
 
-const userInfoDetailss = useSelector((state: RootState) => state.userinformation.userInfo);
+const userInfoDetails = useSelector((state: RootState) => state.userinformation.userInfo);
 
 type InitialValues = {
   email: string,
@@ -40,13 +37,13 @@ type InitialValues = {
 }
 
 const initialValues: InitialValues = {
-  email: `${userInfoDetailss.email}`,
-  firstName: `${userInfoDetailss.firstName}`,
-  lastName: `${userInfoDetailss.lastName}`,
-  phone: `${userInfoDetailss.phone}`,
-  city: `${userInfoDetailss.city}`,
-  country: `${userInfoDetailss.country}`,
-  address: `${userInfoDetailss.address}`
+  email: `${userInfoDetails.email}`,
+  firstName: `${userInfoDetails.firstName}`,
+  lastName: `${userInfoDetails.lastName}`,
+  phone: `${userInfoDetails.phone}`,
+  city: `${userInfoDetails.city}`,
+  country: `${userInfoDetails.country}`,
+  address: `${userInfoDetails.address}`
 }
 
 const token = localStorage.getItem("token");
@@ -55,38 +52,41 @@ const updateUserUrl = `http://localhost:8000/users/${userId}`;
 
 function updateUsersData(values: InitialValues) {
     axios.put(updateUserUrl, {
-      firstName: values.firstName,
-      lastName: values.lastName,
-      email: values.email,
-      phone: values.phone,
-      country: values.country,
-      city: values.city,
-      address: values.address
+      firstName: values.firstName === "" ? `${userInfoDetails.firstName}` : values.firstName,
+      lastName: values.lastName === "" ? `${userInfoDetails.lastName}` : values.lastName,
+      email: values.email === "" ? `${userInfoDetails.email}` : values.email,
+      phone: values.phone === "" ? `${userInfoDetails.phone}` : values.phone,
+      country: values.country === "" ? `${userInfoDetails.country}` : values.country,
+      city: values.city === "" ? `${userInfoDetails.city}` : values.city,
+      address: values.address === "" ? `${userInfoDetails.address}` : values.address,
     }, {headers: {Authorization: `Bearer ${token}`}});
   }
 
-  return (<div>
+  return (
     <Box
         sx={{
             mx: 2,
+            pt: 10,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            width: "900px",
+            margin: "0 auto",
             }}
         >
-        <Box sx={{width: "70%"}}>
-        {/* <Box sx={{ width: '100%', mt: 2 }}> */}
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <Avatar sx={{ my: 4}}>
-                  <ShoppingCartCheckoutIcon />
+        <Box>
+          <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', columnGap: 2 }}>
+              <Avatar sx={{ my: 4, bgcolor: "black"}}>
+                  <AccountCircleIcon />
               </Avatar>
-            </Box>
-            {/* </Box> */}
+              <Typography variant="h6">My Info</Typography>
+          </Box>
+          <Box sx={{bgcolor: "#eee", p: 2, borderRadius: 1, minWidth: "900px"}}>
+            <Box sx={{bgcolor: "white", p: 5, borderRadius: 1}}>
             {
-              userInfoDetailss.lastName === "tudor" ? 
+              token ?
               <Formik
               initialValues={initialValues}
-              // validationSchema = {FormSchema}
               onSubmit = {updateUsersData}
               >
                 {({errors, touched, handleChange}) => {
@@ -95,7 +95,7 @@ function updateUsersData(values: InitialValues) {
                     <Grid item xs={12} sm={6}>
                       <TextField
                       variant="standard"
-                      defaultValue={userInfoDetailss.firstName}
+                      defaultValue={userInfoDetails.firstName}
                       name="firstName"
                       fullWidth
                       id="outlined-helperText"
@@ -109,7 +109,7 @@ function updateUsersData(values: InitialValues) {
                     <Grid item xs={12} sm={6}>
                       <TextField
                       variant="standard"
-                      defaultValue={userInfoDetailss.lastName}
+                      defaultValue={userInfoDetails.lastName}
                       fullWidth
                       id="lastName"
                       label="Last Name"
@@ -124,8 +124,9 @@ function updateUsersData(values: InitialValues) {
                     <Grid item xs={12} sm={6}>
                       <TextField
                       variant="standard"
-                      defaultValue={userInfoDetailss.email}
+                      defaultValue={userInfoDetails.email}
                       fullWidth
+                      disabled
                       id="email"
                       label="Email Address"
                       name="email"
@@ -139,7 +140,7 @@ function updateUsersData(values: InitialValues) {
                     <Grid item xs={12} sm={6}>
                       <TextField
                       variant="standard"
-                      defaultValue={userInfoDetailss.phone}
+                      defaultValue={userInfoDetails.phone}
                       fullWidth
                       id="phone"
                       label="Phone Number"
@@ -154,7 +155,7 @@ function updateUsersData(values: InitialValues) {
                     <Grid item xs={12} sm={6}>
                       <TextField
                       variant="standard"
-                      defaultValue={userInfoDetailss.country}
+                      defaultValue={userInfoDetails.country}
                       fullWidth
                       id="country"
                       label="Country"
@@ -169,7 +170,7 @@ function updateUsersData(values: InitialValues) {
                     <Grid item xs={12} sm={6}>
                       <TextField
                       variant="standard"
-                      defaultValue={userInfoDetailss.city}
+                      defaultValue={userInfoDetails.city}
                       fullWidth
                       id="city"
                       label="City"
@@ -184,7 +185,7 @@ function updateUsersData(values: InitialValues) {
                     <Grid item xs={12}>
                       <TextField
                       variant="standard"
-                      defaultValue={userInfoDetailss.address}
+                      defaultValue={userInfoDetails.address}
                       fullWidth
                       name="address"
                       label="Street Address"
@@ -196,27 +197,26 @@ function updateUsersData(values: InitialValues) {
                         <div className='error-message'> {errors.address}</div>  
                       ): null}
                     </Grid>
-                    <Grid item xs={12}>
-                      <FormControlLabel
-                      control={<Checkbox value="allowExtraEmails" color="primary" />}
-                      label="Same for Shipping Information"
-                      />
-                    </Grid>
                   </Grid>
+                  <Box sx={{textAlign: "left"}}>
                   <Button
                   type="submit"
-                  fullWidth
                   variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+                  sx={{ mt: 5, mb: 2, bgcolor: "black" }}
                   >
-                  Update Information
+                  Save changes
                   </Button>
+                  </Box>
                 </Form>
                 }}
-              </Formik> : null
-            }
+              </Formik> :
+              <Box sx={{ flexGrow: 1, display: "flex", minHeight: "50vh", justifyContent: "center"}}>
+              <Typography sx={{mt: 5}}>Please SIGN IN.</Typography>
+              </Box>
+            } 
+            </Box>
+          </Box>
         </Box>
     </Box>
-  </div>
   );
 }
