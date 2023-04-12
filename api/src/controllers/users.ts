@@ -58,7 +58,7 @@ export const loginWithPasswordController = async (
             return;
         }
 
-        res.json({id: userData?._id, token: generateToken(userData._id), status: "success", message: `Login successful`});
+        res.json({id: userData._id, token: generateToken(userData._id), status: "success", message: `Login successful`});
     } catch (error) {
         console.log(error);
     }

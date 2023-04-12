@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState } from "react";
 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -14,12 +13,6 @@ import ProductDetails from "./ProductDetails";
 import { Product } from "../../types/Product";
 
 export default function ProductItem({product}: {product: Product}) {
-
-  const [isShown, setIsShown] = useState(false);
-
-  function handleClick() {
-      setIsShown(current => !current);
-    };
 
   const style = {
       borderRadius: "5px",
@@ -49,9 +42,6 @@ export default function ProductItem({product}: {product: Product}) {
           />
           <Box sx={{height: "40%"}}>
             <CardContent>
-              {
-              isShown && <Typography>Hello</Typography>
-              }
               <Rating name="half-rating-read" value={product.rating} precision={0.5} readOnly />
               <Typography variant="body1" color="text.secondary">
               {product.brand} {product.category}
