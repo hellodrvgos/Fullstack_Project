@@ -59,7 +59,7 @@ This project involves building a back-end system that creates a server and conne
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- AUTHORS -->
-## Developers:
+## Developer:
 
 * [Dragos]
 
