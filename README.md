@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <div align="center">
 
-<h3 align="center">Messagr...</h3>
+<h3 align="center">...a shop for BESTIES</h3>
 
 </div>
 
