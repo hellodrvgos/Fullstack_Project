@@ -1,48 +1,81 @@
-# Fullstack Project
+<!-- PROJECT LOGO -->
+<div align="center">
 
-## How to run project
+<h3 align="center">...a shop for BESTIES</h3>
 
-### Front-end
+</div>
 
-1. Step 1: cd to client
-2. Step 2: yarn
-3. Step 3: yarn start
 
-### Back-end
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#authors">Developers</a></li>
+  </ol>
+</details>
 
-1. Step 1: cd to api
-2. Step 2: yarn
-3. Step 3: yarn start
 
-**_Remember to run both front-end and back-end at the same time_**
 
-## Requirements
+<!-- ABOUT THE PROJECT -->
+## About The Project
+![Screenshot](client/src/assets/besties.png)
 
-### Back-end
+This project involves building a back-end system that creates a server and connects it to a database, with the aim of enabling the front-end to interact with the database and perform certain functionalities. The backend will include creating at least five products in the database using the POST method, designing a system that allows the front-end to retrieve the list of products, enabling users to register and login using their email and password, and allowing users to update their information, such as changing their username. Additionally, users should be able to order products on the front-end, send order information to the database, and view their previous orders. The goal is to develop a robust backend system that facilitates effective communication between the front-end and the database, while allowing users to perform functionalities seamlessly.
 
-1. Create a server
-2. Connect to database
-3. Create at least 5 products in Database by `POST` methods
-4. Design the backend where
+### Built With
 
-- the front end can get list of product
-- user can register
-- user can log in with password and email
-- user can update his/her information (for example: userName)
-- user can make order in front-end then send order information to database
-- user can display his/her orders
+* ![HTML5][HTML5]
+* ![CSS3][CSS3]
+* ![TypeScript][TypeScript]
+* ![Material-UI][Material-UI]
+* ![React][React.js]
+* ![Redux][Redux]
+* ![React Router][React Router]
+* ![Node.js][Node.js]
+* ![Express.js][Express.js]
+* ![MongoDB][MongoDB]
 
-### Front-end
 
-1. The website has at least these pages: landing page, product page, product details, wish list ,order page, user register,log in page and user information page
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-2. Use `Redux Toolkit` to get data
+<!-- ROADMAP -->
+## Roadmap
 
-3. Styling library: free to choose
+- [ ] The user can register/login
+- [ ] The user can login
+- [ ] The user can add products to Favorites
+- [ ] The user can add products to Cart
+- [ ] The user can place order and see order's information
+- [ ] The user can update personal information
+- [ ] The user can lgout
 
-MAKE THE WEBSITE AS BEAUTIFUL AS MUCH AS YOU CAN
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Deadlines
+<!-- AUTHORS -->
+## Developer:
 
-1. Week 1: Done Backend - CRUD
-2. Week 2: Front-end
+* [Dragos]
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[HTML5]: https://img.shields.io/badge/HTML-239120?style=for-the-badge&logo=html5&logoColor=white
+[CSS3]: https://img.shields.io/badge/CSS-239120?&style=for-the-badge&logo=css3&logoColor=white
+[TypeScript]: https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white
+[Material-UI]: https://img.shields.io/badge/Material--UI-0081CB?style=for-the-badge&logo=material-ui&logoColor=white
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[Redux]: https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white
+[React Router]: https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white
+[Node.js]: https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white
+[Express.js]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge
+[MongoDB]: https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white
+
+[Dragos]: https://github.com/hellodrvgos
