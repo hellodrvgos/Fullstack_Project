@@ -13,7 +13,8 @@ import { getOrderListInfo } from "../../redux/thunks/orders";
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import { Form, Formik } from "formik";
-
+import visa from "../../assets/visa.png"
+import mastercard from "../../assets/mastercard.png"
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -155,14 +156,15 @@ export default function PaymentMethods() {
                                     }}
                                 >
                                         <Tab {...a11yProps(0)} sx={{
-                                            backgroundImage: `url(https://cdn.icon-icons.com/icons2/1186/PNG/512/1490135017-visa_82256.png)`,
+                                            // backgroundImage: `url(https://cdn.icon-icons.com/icons2/1186/PNG/512/1490135017-visa_82256.png)`,
+                                            backgroundImage: `url(${visa})`,
                                             backgroundRepeat: "no-repeat",
                                             backgroundSize: "contain",
                                             backgroundPosition: "center",
                                         }}/>
                                         <Tab {...a11yProps(1)} 
                                         sx={{
-                                            backgroundImage: `url(https://cdn.icon-icons.com/icons2/1186/PNG/512/1490135018-mastercard_82253.png)`,
+                                            backgroundImage: `url(${mastercard})`,
                                             backgroundRepeat: "no-repeat",
                                             backgroundSize: "contain",
                                             backgroundPosition: "center"

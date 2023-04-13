@@ -18,6 +18,8 @@ import PaymentIcon from '@mui/icons-material/Payment';
 import { RootState, AppDispatch } from "../../redux/store"
 import { cartActions } from "../../redux/slices/cart";
 import { getUserInformation } from "../../redux/thunks/user";
+import visalogo from "../../assets/Visa_Logo.png";
+import mastercardlogo from "../../assets/MasterCard_Logo.png";
 
 type CheckOut = {
     setStateCartDrawer: Function
@@ -146,7 +148,7 @@ const fullName = `${userInfoDetails.firstName}  ${userInfoDetails.lastName}`;
                     <CardMedia
                     component="img"
                     sx={{width: "20%", pl: 2, pt: 3}}
-                    image="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
+                    image={visalogo}
                     alt="visa"
                     />
                     <CardContent >
@@ -169,7 +171,7 @@ const fullName = `${userInfoDetails.firstName}  ${userInfoDetails.lastName}`;
                     <CardMedia
                     component="img"
                     sx={{width: "20%", pl: 2, pt: 3}}
-                    image="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/2560px-MasterCard_Logo.svg.png"
+                    image={mastercardlogo}
                     alt="mastercard"
                     />
                     <CardContent>
